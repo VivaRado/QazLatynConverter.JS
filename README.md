@@ -1,7 +1,7 @@
 # QazLatynConverter.JS
 ## Installation
 
-> <script src="QazLatynConverter.min.js"></script>
+> <script src="QazLatynConverter.js"></script>
 
 ## Usage
 > ``` JS
