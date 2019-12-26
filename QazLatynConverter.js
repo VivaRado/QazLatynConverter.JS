@@ -2,6 +2,22 @@
     var ev = e ? e : window.event,
         _QazLatynConverter = function () {};
 
+    function get_closest(goal, div, arr){
+
+        var counts = []
+
+        for(var val = 0; val < arr.length * div; val+=div){
+            counts.push(val)
+        }
+
+        var closest = counts.reduce(function(prev, curr) {
+          return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+        });
+
+        return closest;
+
+    }
+
     _QazLatynConverter.prototype = {
         constructor: _QazLatynConverter,
         version: 'V1.0.0.0',
@@ -83,484 +99,187 @@
                             if (wordLength > 3) //Word end 3 char 
                             {
                                 var key = chars[i - 3] + chars[i - 2] + chars[i - 1];
-                                switch (key.toLowerCase()) {
-                                    case 'сть':
-                                        {
-                                            chars[i] = '';chars[i - 1] = '';
-                                        }
-                                        break;
+
+                                if (key.toLowerCase() == 'сть'){
+                                    
+                                    chars[i] = '';chars[i - 1] = '';
+                                    
                                 }
-                            }
-                            if (j + 1 < length) {
-                                var key = chars[j] + chars[j + 1];
-                                switch (key.toLowerCase()) {
-                                    case 'ия':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 'ıa');j += 1;
-                                            continue;
-                                        }
-                                    case 'йя':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 'ııa');j += 1;
-                                            continue;
-                                        }
-                                    case 'ию':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 'ıý');j += 1;
-                                            continue;
-                                        }
-                                    case 'йю':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 'ıý');j += 1;
-                                            continue;
-                                        }
-                                    case 'сц':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 's');j += 1;
-                                            continue;
-                                        }
-                                    case 'тч':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 'ch');j += 1;
-                                            continue;
-                                        }
-                                    case 'ий':
-                                        {
-                                            latynStrs[j] = this.ConvertWord(key, 'ı');j += 1;
-                                            continue;
-                                        }
-                                    case 'ХХ':
-                                        {
-                                            latynStrs[j] = 'ХХ';j += 1;
-                                            continue;
-                                        }
-                                }
-                            }
-                            switch (chars[j]) {
-                                case 'Я':
-                                    {
-                                        latynStrs[j] = prevSound == this.Sound.Consonant ? 'Á' : 'Ia';
-                                    }
-                                    break;
-                                case 'я':
-                                    {
-                                        latynStrs[j] = prevSound == this.Sound.Consonant ? 'á' : 'ıa';
-                                    }
-                                    break;
-                                case 'Ю':
-                                    {
-                                        latynStrs[j] = prevSound == this.Sound.Consonant ? 'Ú' : 'Iý';
-                                    }
-                                    break;
-                                case 'ю':
-                                    {
-                                        latynStrs[j] = prevSound == this.Sound.Consonant ? 'ú' : 'ıý';
-                                    }
-                                    break;
-                                case 'Щ':
-                                    {
-                                        latynStrs[j] = lastIsUpper ? 'SH' : 'Sh';
-                                    }
-                                    break;
-                                case 'щ':
-                                    {
-                                        latynStrs[j] = 'sh';
-                                    }
-                                    break;
-                                case 'Э':
-                                    {
-                                        latynStrs[j] = 'E';
-                                    }
-                                    break;
-                                case 'э':
-                                    {
-                                        latynStrs[j] = 'e';
-                                    }
-                                    break;
-                                case 'А':
-                                    {
-                                        latynStrs[j] = 'A';
-                                    }
-                                    break;
-                                case 'а':
-                                    {
-                                        latynStrs[j] = 'a';
-                                    }
-                                    break;
-                                case 'Б':
-                                    {
-                                        latynStrs[j] = 'B';
-                                    }
-                                    break;
-                                case 'б':
-                                    {
-                                        latynStrs[j] = 'b';
-                                    }
-                                    break;
-                                case 'Ц':
-                                    {
-                                        latynStrs[j] = 'S';
-                                    }
-                                    break;
-                                case 'ц':
-                                    {
-                                        latynStrs[j] = 's';
-                                    }
-                                    break;
-                                case 'Д':
-                                    {
-                                        latynStrs[j] = 'D';
-                                    }
-                                    break;
-                                case 'д':
-                                    {
-                                        latynStrs[j] = 'd';
-                                    }
-                                    break;
-                                case 'Е':
-                                    {
-                                        latynStrs[j] = 'E';
-                                    }
-                                    break;
-                                case 'е':
-                                    {
-                                        latynStrs[j] = 'e';
-                                    }
-                                    break;
-                                case 'Ф':
-                                    {
-                                        latynStrs[j] = 'F';
-                                    }
-                                    break;
-                                case 'ф':
-                                    {
-                                        latynStrs[j] = 'f';
-                                    }
-                                    break;
-                                case 'Г':
-                                    {
-                                        latynStrs[j] = 'G';
-                                    }
-                                    break;
-                                case 'г':
-                                    {
-                                        latynStrs[j] = 'g';
-                                    }
-                                    break;
-                                case 'Х':
-                                    {
-                                        latynStrs[j] = prevIsC ? 'Q' : 'H';
-                                    }
-                                    break;
-                                case 'х':
-                                    {
-                                        latynStrs[j] = prevIsC ? 'q' : 'h';
-                                    }
-                                    break;
-                                case 'Һ':
-                                    {
-                                        latynStrs[j] = 'H';
-                                    }
-                                    break;
-                                case 'һ':
-                                    {
-                                        latynStrs[j] = 'h';
-                                    }
-                                    break;
-                                case 'І':
-                                    {
-                                        latynStrs[j] = 'İ';
-                                    }
-                                    break;
-                                case 'і':
-                                    {
-                                        latynStrs[j] = 'i';
-                                    }
-                                    break;
-                                case 'И':
-                                    {
-                                        latynStrs[j] = 'I';
-                                    }
-                                    break;
-                                case 'и':
-                                    {
-                                        latynStrs[j] = 'ı';
-                                    }
-                                    break;
-                                case 'Й':
-                                    {
-                                        latynStrs[j] = 'I';
-                                    }
-                                    break;
-                                case 'й':
-                                    {
-                                        latynStrs[j] = 'ı';
-                                    }
-                                    break;
-                                case 'К':
-                                    {
-                                        latynStrs[j] = 'K';
-                                    }
-                                    break;
-                                case 'к':
-                                    {
-                                        latynStrs[j] = 'k';
-                                    }
-                                    break;
-                                case 'Л':
-                                    {
-                                        latynStrs[j] = 'L';
-                                    }
-                                    break;
-                                case 'л':
-                                    {
-                                        latynStrs[j] = 'l';
-                                    }
-                                    break;
-                                case 'М':
-                                    {
-                                        latynStrs[j] = 'M';
-                                    }
-                                    break;
-                                case 'м':
-                                    {
-                                        latynStrs[j] = 'm';
-                                    }
-                                    break;
-                                case 'Н':
-                                    {
-                                        latynStrs[j] = 'N';
-                                    }
-                                    break;
-                                case 'н':
-                                    {
-                                        latynStrs[j] = 'n';
-                                    }
-                                    break;
-                                case 'О':
-                                    {
-                                        latynStrs[j] = 'O';
-                                    }
-                                    break;
-                                case 'о':
-                                    {
-                                        latynStrs[j] = 'o';
-                                    }
-                                    break;
-                                case 'П':
-                                    {
-                                        latynStrs[j] = 'P';
-                                    }
-                                    break;
-                                case 'п':
-                                    {
-                                        latynStrs[j] = 'p';
-                                    }
-                                    break;
-                                case 'Қ':
-                                    {
-                                        latynStrs[j] = 'Q';
-                                    }
-                                    break;
-                                case 'қ':
-                                    {
-                                        latynStrs[j] = 'q';
-                                    }
-                                    break;
-                                case 'Р':
-                                    {
-                                        latynStrs[j] = 'R';
-                                    }
-                                    break;
-                                case 'р':
-                                    {
-                                        latynStrs[j] = 'r';
-                                    }
-                                    break;
-                                case 'С':
-                                    {
-                                        latynStrs[j] = 'S';
-                                    }
-                                    break;
-                                case 'с':
-                                    {
-                                        latynStrs[j] = 's';
-                                    }
-                                    break;
-                                case 'Т':
-                                    {
-                                        latynStrs[j] = 'T';
-                                    }
-                                    break;
-                                case 'т':
-                                    {
-                                        latynStrs[j] = 't';
-                                    }
-                                    break;
-                                case 'Ұ':
-                                    {
-                                        latynStrs[j] = 'U';
-                                    }
-                                    break;
-                                case 'ұ':
-                                    {
-                                        latynStrs[j] = 'u';
-                                    }
-                                    break;
-                                case 'В':
-                                    {
-                                        latynStrs[j] = 'V';
-                                    }
-                                    break;
-                                case 'в':
-                                    {
-                                        latynStrs[j] = 'v';
-                                    }
-                                    break;
-                                case 'У':
-                                    {
-                                        latynStrs[j] = 'Ý';
-                                    }
-                                    break;
-                                case 'у':
-                                    {
-                                        latynStrs[j] = 'ý';
-                                    }
-                                    break;
-                                case 'Ы':
-                                    {
-                                        latynStrs[j] = 'Y';
-                                    }
-                                    break;
-                                case 'ы':
-                                    {
-                                        latynStrs[j] = 'y';
-                                    }
-                                    break;
-                                case 'З':
-                                    {
-                                        latynStrs[j] = 'Z';
-                                    }
-                                    break;
-                                case 'з':
-                                    {
-                                        latynStrs[j] = 'z';
-                                    }
-                                    break;
-                                case 'Ә':
-                                    {
-                                        latynStrs[j] = 'Á';
-                                    }
-                                    break;
-                                case 'ә':
-                                    {
-                                        latynStrs[j] = 'á';
-                                    }
-                                    break;
-                                case 'Ё':
-                                case 'Ө':
-                                    {
-                                        latynStrs[j] = 'Ó';
-                                    }
-                                    break;
-                                case 'ё':
-                                case 'ө':
-                                    {
-                                        latynStrs[j] = 'ó';
-                                    }
-                                    break;
-                                case 'Ү':
-                                    {
-                                        latynStrs[j] = 'Ú';
-                                    }
-                                    break;
-                                case 'ү':
-                                    {
-                                        latynStrs[j] = 'ú';
-                                    }
-                                    break;
-                                case 'Ч':
-                                    {
-                                        latynStrs[j] = lastIsUpper ? 'CH' : 'Ch';
-                                    }
-                                    break;
-                                case 'ч':
-                                    {
-                                        latynStrs[j] = 'ch';
-                                    }
-                                    break;
-                                case 'Ғ':
-                                    {
-                                        latynStrs[j] = 'Ǵ';
-                                    }
-                                    break;
-                                case 'ғ':
-                                    {
-                                        latynStrs[j] = 'ǵ';
-                                    }
-                                    break;
-                                case 'Ш':
-                                    {
-                                        latynStrs[j] = lastIsUpper ? 'SH' : 'Sh';
-                                    }
-                                    break;
-                                case 'ш':
-                                    {
-                                        latynStrs[j] = 'sh';
-                                    }
-                                    break;
-                                case 'Ж':
-                                    {
-                                        latynStrs[j] = 'J';
-                                    }
-                                    break;
-                                case 'ж':
-                                    {
-                                        latynStrs[j] = 'j';
-                                    }
-                                    break;
-                                case 'Ң':
-                                    {
-                                        latynStrs[j] = 'Ń';
-                                    }
-                                    break;
-                                case 'ң':
-                                    {
-                                        latynStrs[j] = 'ń';
-                                    }
-                                    break;
-                                case 'ь':
-                                    {
-                                        latynStrs[j] = '';
-                                    }
-                                    break;
-                                case 'Ь':
-                                    {
-                                        latynStrs[j] = '';
-                                    }
-                                    break;
-                                case 'ъ':
-                                    {
-                                        latynStrs[j] = '';
-                                    }
-                                    break;
-                                case 'Ъ':
-                                    {
-                                        latynStrs[j] = '';
-                                    }
-                                    break;
-                                case '¬':
-                                    {
-                                        latynStrs[j] = '';
-                                    }
-                                    break;
-                                default:
-                                    {
-                                        latynStrs[j] = chars[j] != '' ? chars[j] : '';
-                                    }
-                                    break;
                             }
 
+                            var dn_up = {'ия':'ıa','йя':'ııa','ию':'ıý','йю':'ıý','сц':'s','тч':'ch','ий':'ı', 'ХХ':'XX'},
+                            dn_up_a={"щ":"sh","Э":"E","э":"e","А":"A","а":"a","Б":"B","б":"b","Ц":"S","ц":"s","Д":"D","д":"d","Е":"E","е":"e","Ф":"F","ф":"f","Г":"G","г":"g","Һ":"H","һ":"h","І":"İ","і":"i","И":"I","и":"ı","Й":"I","й":"ı","К":"K","к":"k","Л":"L","л":"l","М":"M","м":"m","Н":"N","н":"n","О":"O","о":"o","П":"P","п":"p","Қ":"Q","қ":"q","Р":"R","р":"r","С":"S","с":"s","Т":"T","т":"t","Ұ":"U","ұ":"u","В":"V","в":"v","У":"Ý","у":"ý","Ы":"Y","ы":"y","З":"Z","з":"z","Ә":"Á","ә":"á","Ё":"Ó","Ө":"Ó","ё":"ó","ө":"ó","Ү":"Ú","ү":"ú","ч":"ch","Ғ":"Ǵ","ғ":"ǵ","ш":"sh","Ж":"J","ж":"j","Ң":"Ń","ң":"ń","ь":"","Ь":"","ъ":"","Ъ":"","¬":""},
+                            dn_up_b={"Щ":"SH","Ч":"CH","Ш":"SH"},
+                            dn_up_c={"Щ":"SH","Ч":"CH","Ш":"SH"},
+                            dn_up_d={"Я":["Á","Ia"],"я":["á","ıa"],"Ю":["Ú","Iý"],"ю":["ú","ıý"]},
+                            dn_up_e={"Х":["Q","H"],"х":["q","h"]};
+
+                            
+                            if (j + 1 < length) {
+                                //
+                                var key = chars[j] + chars[j + 1];
+                                //
+                                //
+                                if (dn_up[key.toLowerCase()]) {
+
+                                    latynStrs[j] = this.ConvertWord(key, dn_up[key.toLowerCase()]);
+                                    j += 1;
+
+                                }
+                                
+                            }
+
+                            //
+                            dn_up_a[chars[j]]?latynStrs[j]=dn_up_a[chars[j]]:dn_up_b[chars[j]]?latynStrs[j]=lastIsUpper?dn_up_b[chars[j]]:dn_up_b[chars[j]].replace("H","h"):dn_up_c[chars[j]]?latynStrs[j]=lastIsUpper?dn_up_c[chars[j]]:dn_up_c[chars[j]].replace("H","h"):dn_up_d[chars[j]]?latynStrs[j]=prevSound==this.Sound.Consonant?dn_up_d[chars[j]][0]:dn_up_d[chars[j]][1]:dn_up_e[chars[j]]?latynStrs[j]=prevIsC?dn_up_e[chars[j]][0]:dn_up_e[chars[j]][1]:latynStrs[j]=""!=chars[j]?chars[j]:"";
+
+                            /*var dn_up = {
+                                'щ':'sh',
+                                'Э':'E',
+                                'э':'e',
+                                'А':'A',
+                                'а':'a',
+                                'Б':'B',
+                                'б':'b',
+                                'Ц':'S',
+                                'ц':'s',
+                                'Д':'D',
+                                'д':'d',
+                                'Е':'E',
+                                'е':'e',
+                                'Ф':'F',
+                                'ф':'f',
+                                'Г':'G',
+                                'г':'g',
+                                'Һ':'H',
+                                'һ':'h',
+                                'І':'İ',
+                                'і':'i',
+                                'И':'I',
+                                'и':'ı',
+                                'Й':'I',
+                                'й':'ı',
+                                'К':'K',
+                                'к':'k',
+                                'Л':'L',
+                                'л':'l',
+                                'М':'M',
+                                'м':'m',
+                                'Н':'N',
+                                'н':'n',
+                                'О':'O',
+                                'о':'o',
+                                'П':'P',
+                                'п':'p',
+                                'Қ':'Q',
+                                'қ':'q',
+                                'Р':'R',
+                                'р':'r',
+                                'С':'S',
+                                'с':'s',
+                                'Т':'T',
+                                'т':'t',
+                                'Ұ':'U',
+                                'ұ':'u',
+                                'В':'V',
+                                'в':'v',
+                                'У':'Ý',
+                                'у':'ý',
+                                'Ы':'Y',
+                                'ы':'y',
+                                'З':'Z',
+                                'з':'z',
+                                'Ә':'Á',
+                                'ә':'á',
+                                'Ё':'Ó',
+                                'Ө':'Ó',
+                                'ё':'ó',
+                                'ө':'ó',
+                                'Ү':'Ú',
+                                'ү':'ú',
+                                'ч':'ch',
+                                'Ғ':'Ǵ',
+                                'ғ':'ǵ',
+                                'ш':'sh',
+                                'Ж':'J',
+                                'ж':'j',
+                                'Ң':'Ń',
+                                'ң':'ń',
+                                'ь':'',
+                                'Ь':'',
+                                'ъ':'',
+                                'Ъ':'',
+                                '¬':''
+                            };
+                            //
+                            var dn_up_b = {
+                                'Щ': 'SH',
+                                'Ч': 'CH',
+                                'Ш': 'SH',
+                            };
+                            var dn_up_c = {
+                                'Щ': 'SH',
+                                'Ч': 'CH',
+                                'Ш': 'SH',
+                            };
+                            var dn_up_d = {
+                                'Я':['Á' , 'Ia'],
+                                'я':['á' , 'ıa'],
+                                'Ю':['Ú' , 'Iý'],
+                                'ю':['ú' ,'ıý']
+                            }
+                            var dn_up_e = {
+                                'Х':['Q' , 'H'],
+                                'х':['q' , 'h']
+                            }
+
+                            if (dn_up[chars[j]]) {
+
+                                latynStrs[j] = dn_up[chars[j]];
+                                
+                            } else {
+
+                                //
+                                //
+                                if (dn_up_b[chars[j]]) {
+
+                                    latynStrs[j] = lastIsUpper ? dn_up_b[chars[j]] : dn_up_b[chars[j]].replace('H', 'h')
+
+                                } else {
+                                    //
+                                    //
+                                    if (dn_up_c[chars[j]]) {
+
+                                        latynStrs[j] = lastIsUpper ? dn_up_c[chars[j]] : dn_up_c[chars[j]].replace('H', 'h')
+
+                                    } else {
+
+                                        //
+                                        
+                                        //
+                                        if (dn_up_d[chars[j]]) {
+
+                                            latynStrs[j] = prevSound == this.Sound.Consonant ? dn_up_d[chars[j]][0] : dn_up_d[chars[j]][1]
+
+                                        } else{
+
+                                            
+                                            //
+                                            if (dn_up_e[chars[j]]) {
+
+                                                latynStrs[j] = prevIsC ? dn_up_e[chars[j]][0] : dn_up_e[chars[j]][1]
+
+                                            } else {
+
+                                                latynStrs[j] = chars[j] != '' ? chars[j] : '';
+
+                                            }
+                                        }
+                                        //
+                                    }
+                                    
+                                }
+                            }*/
+                                  
 
                         }
                         cyrlWord = '';
