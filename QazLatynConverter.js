@@ -113,27 +113,31 @@
                                 
                             }
                             //
+                            if (chars[j] == "Ъ"){
+                                console.log("----")
+                                console.log(dn_up[1][chars[j]])
+                            }
                             //
-                            if (dn_up[1][chars[j]]) {
+                            if (this.Contains(Object.keys(dn_up[1]),chars[j])) {
 
                                 latynStrs[j] = dn_up[1][chars[j]];
                                 
                             } else {
                                 //
-                                if (dn_up[2][chars[j]]) {
+                                if (this.Contains(Object.keys(dn_up[2]),chars[j])) {
                                     //
                                     latynStrs[j] = lastIsUpper ? dn_up[2][chars[j]] : dn_up[2][chars[j]].replace('H', 'h')
                                     //
                                 } else {
                                     //
                                     //
-                                    if (dn_up[3][chars[j]]) {
+                                    if (this.Contains(Object.keys(dn_up[3]),chars[j])) {
 
                                         latynStrs[j] = prevSound == this.Sound.Consonant ? dn_up[3][chars[j]][0] : dn_up[3][chars[j]][1]
 
                                     } else{
                                         //
-                                        if (dn_up[4][chars[j]]) {
+                                        if (this.Contains(Object.keys(dn_up[4]),chars[j])) {
 
                                             latynStrs[j] = prevIsC ? dn_up[4][chars[j]][0] : dn_up[4][chars[j]][1]
 
