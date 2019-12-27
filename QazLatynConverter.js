@@ -65,7 +65,14 @@
                 latynStrs = new Array(),
                 firstCharIsUpper = false,
                 prevSound = this.Sound.Unknown,
-                cyrlWord = '';
+                cyrlWord = '',
+                lit = [
+                    {'ия':'ıa','йя':'ııa','ию':'ıý','йю':'ıý','сц':'s','тч':'ch','ий':'ı','ХХ':'XX'},
+                    {"щ":"sh","Э":"E","э":"e","А":"A","а":"a","Б":"B","б":"b","Ц":"S","ц":"s","Д":"D","д":"d","Е":"E","е":"e","Ф":"F","ф":"f","Г":"G","г":"g","Һ":"H","һ":"h","І":"İ","і":"i","И":"I","и":"ı","Й":"I","й":"ı","К":"K","к":"k","Л":"L","л":"l","М":"M","м":"m","Н":"N","н":"n","О":"O","о":"o","П":"P","п":"p","Қ":"Q","қ":"q","Р":"R","р":"r","С":"S","с":"s","Т":"T","т":"t","Ұ":"U","ұ":"u","В":"V","в":"v","У":"Ý","у":"ý","Ы":"Y","ы":"y","З":"Z","з":"z","Ә":"Á","ә":"á","Ё":"Ó","Ө":"Ó","ё":"ó","ө":"ó","Ү":"Ú","ү":"ú","ч":"ch","Ғ":"Ǵ","ғ":"ǵ","ш":"sh","Ж":"J","ж":"j","Ң":"Ń","ң":"ń","ь":"","Ь":"","ъ":"","Ъ":"","¬":""},
+                    {"Щ":"SH","Ч":"CH","Ш":"SH"},
+                    {"Я":["Á","Ia"],"я":["á","ıa"],"Ю":["Ú","Iý"],"ю":["ú","ıý"]},
+                    {"Х":["Q","H"],"х":["q","h"]}
+                ];
 
             for (var i = 0; i < length; i++) {
 
@@ -106,180 +113,54 @@
                                     
                                 }
                             }
-
-                            var dn_up = {'ия':'ıa','йя':'ııa','ию':'ıý','йю':'ıý','сц':'s','тч':'ch','ий':'ı', 'ХХ':'XX'},
-                            dn_up_a={"щ":"sh","Э":"E","э":"e","А":"A","а":"a","Б":"B","б":"b","Ц":"S","ц":"s","Д":"D","д":"d","Е":"E","е":"e","Ф":"F","ф":"f","Г":"G","г":"g","Һ":"H","һ":"h","І":"İ","і":"i","И":"I","и":"ı","Й":"I","й":"ı","К":"K","к":"k","Л":"L","л":"l","М":"M","м":"m","Н":"N","н":"n","О":"O","о":"o","П":"P","п":"p","Қ":"Q","қ":"q","Р":"R","р":"r","С":"S","с":"s","Т":"T","т":"t","Ұ":"U","ұ":"u","В":"V","в":"v","У":"Ý","у":"ý","Ы":"Y","ы":"y","З":"Z","з":"z","Ә":"Á","ә":"á","Ё":"Ó","Ө":"Ó","ё":"ó","ө":"ó","Ү":"Ú","ү":"ú","ч":"ch","Ғ":"Ǵ","ғ":"ǵ","ш":"sh","Ж":"J","ж":"j","Ң":"Ń","ң":"ń","ь":"","Ь":"","ъ":"","Ъ":"","¬":""},
-                            dn_up_b={"Щ":"SH","Ч":"CH","Ш":"SH"},
-                            dn_up_c={"Щ":"SH","Ч":"CH","Ш":"SH"},
-                            dn_up_d={"Я":["Á","Ia"],"я":["á","ıa"],"Ю":["Ú","Iý"],"ю":["ú","ıý"]},
-                            dn_up_e={"Х":["Q","H"],"х":["q","h"]};
-
+                            //
                             
+                            //
                             if (j + 1 < length) {
                                 //
                                 var key = chars[j] + chars[j + 1];
                                 //
-                                //
-                                if (dn_up[key.toLowerCase()]) {
+                                if (lit[0][key.toLowerCase()]) {
 
-                                    latynStrs[j] = this.ConvertWord(key, dn_up[key.toLowerCase()]);
+                                    latynStrs[j] = this.ConvertWord(key, lit[0][key.toLowerCase()]);
                                     j += 1;
 
                                 }
-                                
-                            }
-
-                            //
-                            dn_up_a[chars[j]]?latynStrs[j]=dn_up_a[chars[j]]:dn_up_b[chars[j]]?latynStrs[j]=lastIsUpper?dn_up_b[chars[j]]:dn_up_b[chars[j]].replace("H","h"):dn_up_c[chars[j]]?latynStrs[j]=lastIsUpper?dn_up_c[chars[j]]:dn_up_c[chars[j]].replace("H","h"):dn_up_d[chars[j]]?latynStrs[j]=prevSound==this.Sound.Consonant?dn_up_d[chars[j]][0]:dn_up_d[chars[j]][1]:dn_up_e[chars[j]]?latynStrs[j]=prevIsC?dn_up_e[chars[j]][0]:dn_up_e[chars[j]][1]:latynStrs[j]=""!=chars[j]?chars[j]:"";
-
-                            /*var dn_up = {
-                                'щ':'sh',
-                                'Э':'E',
-                                'э':'e',
-                                'А':'A',
-                                'а':'a',
-                                'Б':'B',
-                                'б':'b',
-                                'Ц':'S',
-                                'ц':'s',
-                                'Д':'D',
-                                'д':'d',
-                                'Е':'E',
-                                'е':'e',
-                                'Ф':'F',
-                                'ф':'f',
-                                'Г':'G',
-                                'г':'g',
-                                'Һ':'H',
-                                'һ':'h',
-                                'І':'İ',
-                                'і':'i',
-                                'И':'I',
-                                'и':'ı',
-                                'Й':'I',
-                                'й':'ı',
-                                'К':'K',
-                                'к':'k',
-                                'Л':'L',
-                                'л':'l',
-                                'М':'M',
-                                'м':'m',
-                                'Н':'N',
-                                'н':'n',
-                                'О':'O',
-                                'о':'o',
-                                'П':'P',
-                                'п':'p',
-                                'Қ':'Q',
-                                'қ':'q',
-                                'Р':'R',
-                                'р':'r',
-                                'С':'S',
-                                'с':'s',
-                                'Т':'T',
-                                'т':'t',
-                                'Ұ':'U',
-                                'ұ':'u',
-                                'В':'V',
-                                'в':'v',
-                                'У':'Ý',
-                                'у':'ý',
-                                'Ы':'Y',
-                                'ы':'y',
-                                'З':'Z',
-                                'з':'z',
-                                'Ә':'Á',
-                                'ә':'á',
-                                'Ё':'Ó',
-                                'Ө':'Ó',
-                                'ё':'ó',
-                                'ө':'ó',
-                                'Ү':'Ú',
-                                'ү':'ú',
-                                'ч':'ch',
-                                'Ғ':'Ǵ',
-                                'ғ':'ǵ',
-                                'ш':'sh',
-                                'Ж':'J',
-                                'ж':'j',
-                                'Ң':'Ń',
-                                'ң':'ń',
-                                'ь':'',
-                                'Ь':'',
-                                'ъ':'',
-                                'Ъ':'',
-                                '¬':''
-                            };
-                            //
-                            var dn_up_b = {
-                                'Щ': 'SH',
-                                'Ч': 'CH',
-                                'Ш': 'SH',
-                            };
-                            var dn_up_c = {
-                                'Щ': 'SH',
-                                'Ч': 'CH',
-                                'Ш': 'SH',
-                            };
-                            var dn_up_d = {
-                                'Я':['Á' , 'Ia'],
-                                'я':['á' , 'ıa'],
-                                'Ю':['Ú' , 'Iý'],
-                                'ю':['ú' ,'ıý']
-                            }
-                            var dn_up_e = {
-                                'Х':['Q' , 'H'],
-                                'х':['q' , 'h']
-                            }
-
-                            if (dn_up[chars[j]]) {
-
-                                latynStrs[j] = dn_up[chars[j]];
-                                
-                            } else {
-
                                 //
-                                //
-                                if (dn_up_b[chars[j]]) {
+                            }
+                            //
+                            var index = lit.findIndex(function(v){return v[chars[j]]});
+                            //
+                            var _f = lit[index];
+                            //
+                            if (_f) {
 
-                                    latynStrs[j] = lastIsUpper ? dn_up_b[chars[j]] : dn_up_b[chars[j]].replace('H', 'h')
-
-                                } else {
-                                    //
-                                    //
-                                    if (dn_up_c[chars[j]]) {
-
-                                        latynStrs[j] = lastIsUpper ? dn_up_c[chars[j]] : dn_up_c[chars[j]].replace('H', 'h')
-
-                                    } else {
-
-                                        //
-                                        
-                                        //
-                                        if (dn_up_d[chars[j]]) {
-
-                                            latynStrs[j] = prevSound == this.Sound.Consonant ? dn_up_d[chars[j]][0] : dn_up_d[chars[j]][1]
-
-                                        } else{
-
-                                            
-                                            //
-                                            if (dn_up_e[chars[j]]) {
-
-                                                latynStrs[j] = prevIsC ? dn_up_e[chars[j]][0] : dn_up_e[chars[j]][1]
-
-                                            } else {
-
-                                                latynStrs[j] = chars[j] != '' ? chars[j] : '';
-
-                                            }
+                                switch (true) {
+                                    case index == 1:
+                                        {
+                                            latynStrs[j] = _f[chars[j]];
                                         }
-                                        //
-                                    }
-                                    
+                                        break;
+                                    case index == 2:
+                                        {
+                                            lastIsUpper ? _f[chars[j]] : _f[chars[j]].replace('H', 'h')
+                                        }
+                                        break;
+                                    case index == 3:
+                                        {
+                                            latynStrs[j] = prevSound == this.Sound.Consonant ? _f[chars[j]][0] : _f[chars[j]][1]
+                                        }
+                                        break;
+                                    case index == 4:
+                                        {
+                                            latynStrs[j] = prevIsC ? _f[chars[j]][0] : _f[chars[j]][1]
+                                        }
+                                        break;
                                 }
-                            }*/
-                                  
+
+                            } else {
+                                latynStrs[j] = chars[j] != '' ? chars[j] : '';
+                            }
 
                         }
                         cyrlWord = '';
