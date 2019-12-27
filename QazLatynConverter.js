@@ -2,22 +2,6 @@
     var ev = e ? e : window.event,
         _QazLatynConverter = function () {};
 
-    function get_closest(goal, div, arr){
-
-        var counts = []
-
-        for(var val = 0; val < arr.length * div; val+=div){
-            counts.push(val)
-        }
-
-        var closest = counts.reduce(function(prev, curr) {
-          return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
-        });
-
-        return closest;
-
-    }
-
     _QazLatynConverter.prototype = {
         constructor: _QazLatynConverter,
         version: 'V1.0.0.0',
@@ -82,20 +66,27 @@
                         var wordLength = cyrlWord.length,
                             k = wordLength,
                             j = (i - wordLength);
-                        for (; k > 3 || (wordLength == 3 && k >= 3) || (wordLength == 2 && k >= 2); k--) {
+                        //
+                        while (k>3 || (wordLength == 3 && k >= 3) || (wordLength == 2 && k >= 2) ){
+
                             var wpKey = cyrlWord.substring(0, k).toLowerCase();
                             if (this.wordsPackDic.hasOwnProperty(wpKey)) {
                                 latynStrs[j] = this.ConvertWord(cyrlWord.substring(0, k), this.wordsPackDic[wpKey]);
                                 j += k;
                                 break;
                             }
+                            //
+                            k--;
+                            //
                         }
                         cyrlWord = cyrlWord.toLowerCase();
                         firstCharIsUpper = chars[j].toUpperCase() === chars[j];
                         var lastIsUpper = false,
                             prevIsC = false,
                             lastStartIndex = j;
-                        for (; j < i; j++) {
+
+                        while ( j < i ){
+
                             if (j > lastStartIndex) {
                                 prevSound = this.Contains(this.vowelChars, chars[j - 1].toUpperCase()) ? this.Sound.Vowel : this.Sound.Consonant;
                                 prevIsC = chars[j - 1].toLowerCase() === 'с';
@@ -114,16 +105,15 @@
                                 }
                             }
                             //
-                            
-                            //
                             if (j + 1 < length) {
                                 //
                                 var key = chars[j] + chars[j + 1];
+                                var key_l = key.toLowerCase();
                                 //
                                 if (lit[0][key.toLowerCase()]) {
 
-                                    latynStrs[j] = this.ConvertWord(key, lit[0][key.toLowerCase()]);
-                                    j += 1;
+                                    latynStrs[j] = this.ConvertWord(key, lit[0][key_l]);
+                                    j++;
 
                                 }
                                 //
@@ -134,7 +124,7 @@
                             var _f = lit[index];
                             //
                             if (_f) {
-
+                                //
                                 switch (true) {
                                     case index == 1:
                                         {
@@ -157,19 +147,19 @@
                                         }
                                         break;
                                 }
-
+                                //
                             } else {
                                 latynStrs[j] = chars[j] != '' ? chars[j] : '';
                             }
-
+                            //
+                            j++;
+                            //
                         }
                         cyrlWord = '';
-
-
+                        //
                     }
                     latynStrs[i] = chars[i];
                     prevSound = this.Sound.Unknown;
-                    continue;
 
                 }
                 cyrlWord += chars[i];
